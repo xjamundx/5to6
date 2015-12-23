@@ -13,24 +13,20 @@ js code from ES5 to ES6 using [jscodeshift](https://github.com/facebook/jscodesh
 ## Transforms
 
 - `amd` - Transforms AMD style modules to ES6 imports/exports
-- `cjs` - Transforms CommonJS style modules to ES6 imports/exports
+- `cjs` - Transforms CommonJS style `require()` calls to ES6 import statements
 - `no-strict` - Removes "use strict" statements
+- `exports` - Move CommonJS style `module.exports` statements to ES6 export statements
 
 ## Known issues
+
 * Currently loses comments if directly before the `require()` statement.
-* require() calls in single var statements get reordered, and moved before the single var after conversion to import.
-* can't automagically figure out when you want to use `import * as varName`.
+* `require()` calls in single var statements get reordered, and moved before the single var after conversion to import.
+* Can't automagically figure out when you want to use `import * as varName`.
+* End-of-line comments also missing in many situations
 
-## TODO:
-- [ ] Fix single var issues
-- [ ] Avoid losing info like comments when transforming require() statements.
+## Appendix - Transforms In-Depth
 
-## Appendix
-
-### In Depth Example (CJS))
-
-Apply a transform to a file via [jscodeshift](https://github.com/facebook/jscodeshift):
-`$ jscodeshift -t cjs.js fileToTransform.js`
+### CJS Transform
 
 **Before**
 ```js
